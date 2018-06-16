@@ -25,8 +25,9 @@
                               {Calculate the trial stress \\
                               $\sigma^{tr}_i = f \left( \epsilon^{el}_i \right)$};
   \node (matAdmissibleBlock)  [separateModel, right of=trialStressBlock, xshift=4.5cm, yshift=-0.5cm]
-                              {Inelastic Material Model: \\ iteration on inelastic strain required to \\ 
-                              return to indvidual model yield surface};  
+                              {Inelastic Material Model: \\ 
+                               Material-specific calculation, may include \\ 
+                               nonlinear iterations on inelastic strain};  
   \node (admissiblesBlock)    [internalIter, below of=trialStressBlock, yshift=-0.5cm]
                               {Save the admissible strains, stress \\
                               $\Delta \epsilon^{el}$, $\Delta \epsilon^{inel}_i$, $\sigma$\\
@@ -42,7 +43,7 @@
   \node (weightedStrainBlock) [process, below of=convergenceBlock, yshift=-2cm]
                               {Calculated the weighted inelastic strains \\ $\Delta \epsilon^{inel}_{com} = \sum_m w_m \Delta \epsilon^{inel}_m $};
   \node (finalizeCTOBlock)    [process, below of=weightedStrainBlock, yshift=-0.5cm]
-                              {Finalize the combined \\ Jacobian multiplier tensor};
+                              {Finalize the combined \\ consistent tangent operator matrix};
   \node (matTimeStepBlock)    [process, below of=finalizeCTOBlock, yshift=-0.5cm] 
                               {Check the allowable \\ time step size};
                               

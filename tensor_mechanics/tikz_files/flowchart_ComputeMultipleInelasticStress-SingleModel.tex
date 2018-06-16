@@ -21,8 +21,9 @@
                               {Calculate the trial stress \\
                               $\sigma^{tr} = f \left( \epsilon^{el} \right)$};
   \node (matAdmissibleBlock)  [separateModel, right of=trialStressBlock, xshift=4.5cm, yshift=-1cm]
-                              {Inelastic Material Model: \\ iteration on inelastic strain required to \\ 
-                              return to indvidual model yield surface};  
+                              {Inelastic Material Model: \\ 
+                               Material-specific calculation, may include \\ 
+                               nonlinear iterations on inelastic strain};  
   \node (admissiblesBlock)    [process, below of=trialStressBlock, yshift=-1cm]
                               {Save the admissible strains, stress \\
                               $\Delta \epsilon^{el}$, $\Delta \epsilon^{inel}$, $\sigma$\\
