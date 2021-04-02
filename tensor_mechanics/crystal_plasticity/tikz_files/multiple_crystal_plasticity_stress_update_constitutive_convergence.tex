@@ -14,7 +14,7 @@
     convergenceCheck/.style={newtonIteration, diamond, aspect=2},
 }
 
-\begin{document}    
+\begin{document}
   \begin{tikzpicture}[node distance=1.5cm,
     every node/.style={fill=white, font=\sffamily}, align=center]
   % Specification of nodes (position, etc.)
@@ -22,82 +22,82 @@
                               {Recieve trial stress, $\mathbf{S}$, and deformation gradient, $\mathbf{F}$,\\
                                and set the initial constitutive values for\\
                                the first iteration, e.g. $g^{\alpha}$, $\rho^{\alpha}_{dislocations}$, $\rho_{defects}$};
-                               
+
   \node (calcTau)          [newtonIteration, below of=start, yshift=-0.5cm]
                               {Calculate the applied shear stress \\ for each crystal plasticity model\\
-                                $\tau^{\alpha}_i = \mathbf{S} : \mathbf{s}_{i,o}^{\alpha} \otimes \mathbf{m}_{i,o}^{\alpha}$};                              
-                                                           
+                                $\tau^{\alpha}_i = \mathbf{S} : \mathbf{s}_{i,o}^{\alpha} \otimes \mathbf{m}_{i,o}^{\alpha}$};
+
  \node (calcSlip)  [constitutiveModel, right of=calcTau, xshift=6.0cm, yshift=-1cm]
                               {Calculate the slip increment and the \\
                                plastic velocity gradient \\ for each crystal plasticity model\\
-                               $\Delta \mathcal{L}^P_i = \sum_{\alpha} \Delta \gamma^{\alpha}_i \mathbf{s}_{i,o}^{\alpha} \otimes \mathbf{m}_{i,o}^{\alpha}$}; 
-                               
+                               $\Delta \mathcal{L}^P_i = \sum_{\alpha} \Delta \gamma^{\alpha}_i \mathbf{s}_{i,o}^{\alpha} \otimes \mathbf{m}_{i,o}^{\alpha}$};
+
 \node (calcSlipTotal)  [newtonIteration, below of=calcSlip, yshift=-1.0cm]
                               {Calculate the total
                                plastic velocity gradient\\
-                               $\mathbf{L}^p = \sum_{i=1}^m \mathcal{L}^p_i$ }; 
-                               
+                               $\mathbf{L}^p = \sum_{i=1}^m \mathcal{L}^p_i$ };
+
   \node (updateDeformGrads)   [newtonIteration, below of=calcTau, yshift=-3cm]
                               {Update the deformation gradients and strain: \\
                                ${\mathbf{F}^P}^{-1} = {\mathbf{F}^P}^{-1}_{old} \cdot \left( \mathbf{I} - \Delta \mathbf{L}^P \right) $\\ [0.15cm]
                                $\mathbf{F}^e = \mathbf{F} \cdot {\mathbf{F}^P}^{-1}$ \\ [0.15cm]
-                               $\boldsymbol{\epsilon}^e = \frac{1}{2} \left( {\mathbf{F}^e}^T \cdot \mathbf{F}^e - \mathbf{I} \right)$ };                            
+                               $\boldsymbol{\epsilon}^e = \frac{1}{2} \left( {\mathbf{F}^e}^T \cdot \mathbf{F}^e - \mathbf{I} \right)$ };
 
-  \node (updateResidual)    [newtonIteration, below of=updateDeformGrads, yshift=-1cm] 
+  \node (updateResidual)    [newtonIteration, below of=updateDeformGrads, yshift=-1cm]
                               {Calculate the stress residual\\
                               $\mathbb{R} = || \mathbf{S}_{(n-1)} - \left( \mathbb{C}: \boldsymbol{\epsilon}^e \right) ||$};
-                              
-                              
+
+
 \node (calcJacobian)    [constitutiveModel, right of=updateResidual, xshift=6cm, yshift=1cm]
-                              {Calculate the crystal plasticity slip derivative \\ and Jacobian for each model\\
-                              $\frac{\partial \tau_i}{\partial  \mathbf{S}}$ and  $ \frac{\partial {\mathbf{F}^P_i}^{-1}}{\partial \mathbf{S}}$};
-                              
+                              {Calculate the crystal plasticity slip derivative \\ and Jacobian contributions from each model\\
+                              $\frac{\partial {\mathcal{L}^P_i}^{-1}}{\partial \dot{\gamma}_i^{\alpha}}$, $\frac{\partial \dot{\gamma}_i^\alpha}{\partial \tau_i^\alpha}$ and $\frac{\partial \tau_i^\alpha}{\partial  \mathbf{S}}$ };
+
  \node (calcJacobianTotal)    [newtonIteration, below of=calcJacobian, yshift=-1cm]
                               {Calculate the total crystal plasticity Jacobian\\
-                              $\frac{\partial {\mathbf{F}^P}^{-1}}{\partial \mathbf{S}}  = \sum_{i=1}^{m} \frac{\partial {\mathbf{F}^P_i}^{-1}}{\partial \mathbf{S}} $ \\
-                              $\mathbb{J} = \mathbb{I} - \left[ \mathbb{C} \frac{\partial \boldsymbol{\epsilon}^e}{\partial \mathbf{F}^e}  \frac{\partial \mathbf{F}^e}{\partial {\mathbf{F}^P}^{-1}} \frac{\partial {\mathbf{F}^P}^{-1}}{\partial \mathbf{S}} \right]$};                            
-                               
+                              $\frac{\partial {\mathbf{F}^P}^{-1}}{\partial \mathbf{S}}  = \sum_{i} \sum_{\alpha} \left\{ \frac{\partial {\mathcal{L}^P_i}^{-1}}{\partial \dot{\gamma}_i^{\alpha}} \frac{\partial \dot{\gamma}_i^{\alpha}}{\partial \tau_i^{\alpha}} \frac{\partial \tau_i^\alpha}{\partial  \mathbf{S}} \right\}$ \\
+                              $\mathbb{J} = \mathbb{I} - \left[ \mathbb{C} \frac{\partial \boldsymbol{\epsilon}^e}{\partial \mathbf{F}^e}  \frac{\partial \mathbf{F}^e}{\partial {\mathbf{F}^P}^{-1}} \frac{\partial {\mathbf{F}^P}^{-1}}{\partial \mathbf{S}} \right]$};
+
   \node (convergenceBlock)  [convergenceCheck, below of=updateResidual,  yshift=-2.5cm]
-                             {Check convergence \\ 
+                             {Check convergence \\
                              of $\mathbb{R}$};
-                             
+
   \node (updateResistances)  [constitutiveModel, right of=convergenceBlock, xshift=6cm]
                               {Update the slip resistances\\
                               for each model\\
-                               $g^{\alpha}_i = f_i \left( \rho^{\alpha}_{dislocations} \right)$};                          
-  
-                              
+                               $g^{\alpha}_i = f_i \left( \rho^{\alpha}_{dislocations} \right)$};
+
+
   \node (updateStress)  [newtonIteration, left of=calcTau, xshift=-2cm, yshift=-2cm]
                               {Update trial stress\\
                                $\mathbf{S} = \mathbf{S}_{(n-1)} - \mathbb{J}^{-1} \cdot \Delta \mathbf{S}$};
 
- \node (passBackBlock) [newtonIteration, below of=updateResistances, yshift=-0.5cm] 
+ \node (passBackBlock) [newtonIteration, below of=updateResistances, yshift=-0.5cm]
                              {Pass back converged stress, $\mathbf{S}$,\\
                         and plastic velocity gradient, $\mathbf{L}^P$};
 
 
- 
+
   % Specification of lines between nodes specified above
-  % with aditional nodes for description 
+  % with aditional nodes for description
   \draw[->]  (start) to (calcTau);
 
   \draw[<-, bend right=20, dashed] (calcSlip.north) to (calcTau.east);
   \draw[->, dashed]  (calcSlip.south) to (calcSlipTotal.north) ;
   \draw[->, bend left=20, dashed]  (calcSlipTotal.south) to (updateDeformGrads.east);
-  
+
   \draw[->]  (updateDeformGrads) to (updateResidual);
 
   \draw[<-, bend right=20, dashed] (calcJacobian.west) to (updateResidual.east);
   \draw[->, dashed] (calcJacobian.south) to (calcJacobianTotal.north);
   \draw[->, bend right=30, dashed]  (calcJacobianTotal.west) to (convergenceBlock.north);
-  
+
   \draw[->, dashed] (convergenceBlock.east) to node {Yes} (updateResistances.west);
   \draw[->, dashed]  (updateResistances.south) to (passBackBlock.north);
-  
+
   \draw[->] (convergenceBlock.south) -- node{No} ++(0,-1.5) -- ++(-5.15,0) -- ($(updateStress.south west)!0.25!(updateStress.south)$);
-  
+
   \draw[->,] ($(updateStress.north west)!0.25!(updateStress.north)$) -- ++(0,1.2) -- (calcTau.west);
- 
+
 
   \end{tikzpicture}
 
