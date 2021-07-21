@@ -54,6 +54,10 @@ if __name__ == '__main__':
     members.add('Joshua Hansel', date(2016,8,1))
     members.add('Robert Carlsen', date(2016, 9, 1))
     members.add('Alexander Lindsay', date(2017,8,1))
+    members.add('Guillaume Giudicelli', date(2020, 8, 10))
+    members.add('Sterling Harper', date(2020, 9, 14), date(2021, 4, 29))
+    members.add('Roy Stogner', date(2021, 1, 18))
+
 
     for i, mem in enumerate(members):
         plt.barh(i, mem.days, left=mem.offset, zorder=3)
