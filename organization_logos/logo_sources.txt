@@ -3,4 +3,5 @@ https://www.olcf.ornl.gov/wp-content/uploads/2013/01/OLCF_official_white_10_26_1
 https://cdn.lanl.gov/65725dd8-84c5-4c04-adb6-cbfaab3b6025.png
 https://www.lanl.gov/_assets/images/lanl-logo-white-2021.png
 https://neno.lanl.gov/_assets/2018/images/lanl-logo-solid.png
-https://water.es.anl.gov/Images/argonne_header_logo.jpg
+https://www.alcf.anl.gov/sites/default/files/styles/large/public/2020-01/Argonne_cmyk_black.png?itok=-df89dHw
+https://www.alcf.anl.gov/sites/default/files/styles/large/public/2020-01/Argonne_cmyk_white.png?itok=-df89dHw
